@@ -15,9 +15,9 @@ export class CreatePersonUseCase implements ICreatePersonUseCase {
   async Execute(input: ICreatePersonIN): Promise<Result<ICreatePersonOUT>> {
     const person = FactoryMapper<Person>('PERSON').toDomain(input);
 
-    // const alreadyRegistered = await this.personRep.exists({
-    //   document: person.document,
-    // });
+    const alreadyRegistered = await this.personRep.exists({
+      document: person.document,
+    });
 
     if (alreadyRegistered) {
       Result.Conflict({
