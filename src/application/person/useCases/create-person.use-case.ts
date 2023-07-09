@@ -1,10 +1,14 @@
-import { IPersonRepository } from './repositories/person-repository.interface';
+import { IPersonRepository } from '../repositories/person-repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
-import { ICreatePersonIN, ICreatePersonOUT, ICreatePersonUseCase } from './interfaces/create-person.interfaces';
-import { Result } from '../../utils/error/custom-error';
-import { FactoryMapper } from '../../domain/mappers/factory';
-import { Person } from '../../domain/Person/person.model';
-import { Cache } from '../../infra/redis/connection';
+import {
+  ICreatePersonIN,
+  ICreatePersonOUT,
+  ICreatePersonUseCase,
+} from '../interfaces/create-person.interfaces';
+import { Result } from '../../../utils/error/custom-error';
+import { FactoryMapper } from '../../../domain/mappers/factory';
+import { Person } from '../../../domain/Person/person.model';
+import { Cache } from '../../../infra/redis/connection';
 
 @Injectable()
 export class CreatePersonUseCase implements ICreatePersonUseCase {

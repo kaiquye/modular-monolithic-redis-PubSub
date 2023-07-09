@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { TicketController } from './infra/controller/ticket.controller';
-import { PrismaService } from '../prisma/connection';
+import { Global, Module } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { RepositoriesModule } from './infra/repositories/repositories.module';
+import { ControllersModule } from './infra/controller/controllers.module';
 
 @Module({
-  imports: [],
-  controllers: [TicketController],
-  providers: [PrismaService, RepositoriesModule],
+  providers: [PrismaService, RepositoriesModule, ControllersModule],
+  exports: [ControllersModule],
+  imports: [ControllersModule],
 })
 export class AppModule {}
