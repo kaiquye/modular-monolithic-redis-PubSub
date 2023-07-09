@@ -12,6 +12,7 @@ export class CreatePersonUseCase implements ICreatePersonUseCase {
     @Inject('person-repository')
     private personRep: IPersonRepository,
   ) {}
+
   async Execute(input: ICreatePersonIN): Promise<Result<ICreatePersonOUT>> {
     const person = FactoryMapper<Person>('PERSON').toDomain(input);
 
