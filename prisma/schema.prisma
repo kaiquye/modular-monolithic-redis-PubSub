@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TicketStatus {
+  RESERVED
+  AVAILABLE
+  UNAVAILABLE
+}
+
+enum TransactionStatus {
+  APPROVED
+  CANCELED
+  AWAITING_PAYMENT
+}
+
+enum PersonStatus {
+  ACTIVE
+  BLOCKED
+}
+
+model Person {
+  Id        String       @id @default(uuid())
+  firstName String       @db.VarChar(255)
+  lastName  String?      @db.VarChar(255)
+  email     String       @unique @db.VarChar(255)
+  document  String       @db.VarChar(255)
+  password  String       @db.VarChar(255)
+  status    PersonStatus @default(ACTIVE)
+}
+
+model Ticket {
+  Id          String       @id @default(uuid())
+  number      String       @unique @db.VarChar(255)
+  location    String?      @db.VarChar(255)
+  description String?      @db.VarChar(255)
+  price       Float        @db.Real()
+  status      TicketStatus @default(AVAILABLE)
+  created_at  DateTime     @default(now()) @db.Timestamptz()
+  updated_at  DateTime     @default(now()) @updatedAt @db.Timestamptz()
+  Transaction Transaction?
+}
+
+model Transaction {
+  Id            String            @id @default(uuid())
+  e2e           String?           @unique @db.VarChar(255)
+  status        Json
+  ticketId      String            @unique()
+  currentStatus TransactionStatus @default(AWAITING_PAYMENT)
+  created_at    DateTime          @default(now()) @db.Timestamptz()
+  updated_at    DateTime          @default(now()) @updatedAt @db.Timestamptz()
+  ticket_id     Ticket            @relation(fields: [ticketId], references: [Id])
+}
