@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { CreatePersonUseCase } from '../create-person.use-case';
-import { ICreatePersonUseCase } from '../interfaces/create-person.interfaces';
+import { ICreatePersonUseCase } from '../../interfaces/create-person.interfaces';
 
 describe('CatsController', () => {
   let createPerson: ICreatePersonUseCase;
