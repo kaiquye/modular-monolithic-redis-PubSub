@@ -31,7 +31,7 @@ export class Person {
     this.password = password;
   }
 
-  public Create(fistName: string, lastName: '', email: string, document: string, password: string) {
+  public static Create(fistName: string, lastName = '', email: string, document: string, password: string) {
     const currentStatus = EPersonStatus.ACTIVE;
     return new Person(fistName, lastName, email, document, password, currentStatus);
   }

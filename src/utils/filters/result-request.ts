@@ -9,17 +9,19 @@ export class ResultExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.httpStatusCode;
-    const error = exception.message;
-    const code = exception.code;
-    const message = exception.error;
+    const error = exception.error;
+    const errorReference = exception.errorReference;
+    const message = exception.message;
 
-    response.status(status).json({
+    const json = {
       error: error,
-      code: code,
-      message: message,
-      statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-    });
+      details: {
+        errorReference: errorReference,
+        message: message,
+      },
+    };
+    response.status(status).json(json);
   }
 }
