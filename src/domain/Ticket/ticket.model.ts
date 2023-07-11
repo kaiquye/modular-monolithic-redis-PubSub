@@ -20,7 +20,7 @@ export class Ticket {
     Number: string,
     Location: string,
     Description: string,
-    Price: string,
+    Price: number,
     Status: TicketStatus,
     Person_id?: string,
     Id?: string,
@@ -29,12 +29,12 @@ export class Ticket {
     this.Number = Number;
     this.Location = Location;
     this.Description = Description;
-    this.Price = parseFloat(Price);
+    this.Price = Price;
     this.Status = Status;
     this.Person_id = Person_id;
   }
 
-  public static Create(Location: string, Description: string, Price: string) {
+  public static Create(Location: string, Description: string, Price: number) {
     const currentStatus = TicketStatus.AVAILABLE;
     const currentNumber = GenerateNumber.generate();
 

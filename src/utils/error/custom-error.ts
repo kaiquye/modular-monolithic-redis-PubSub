@@ -26,6 +26,9 @@ export class Result<T> {
   public static Conflict(data: IError) {
     throw new Result(409, data.message, true, data.errorReference);
   }
+  public static NotFound(data: IError) {
+    throw new Result(404, data.message, true, data.errorReference);
+  }
   public static Created<OutPut>(data: OutPut): Result<OutPut> {
     return new Result<OutPut>(201, null, false, null, data);
   }
