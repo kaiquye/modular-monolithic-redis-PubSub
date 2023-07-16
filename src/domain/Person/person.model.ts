@@ -35,4 +35,12 @@ export class Person {
     const currentStatus = EPersonStatus.ACTIVE;
     return new Person(fistName, lastName, email, document, password, currentStatus);
   }
+
+  static toDomain(data: Partial<Person>): Person {
+    return Person.Create(data.firstName, data.lastName, data.email, data.document, data.password);
+  }
+
+  static toView(data: Person): Partial<Person> {
+    return undefined;
+  }
 }

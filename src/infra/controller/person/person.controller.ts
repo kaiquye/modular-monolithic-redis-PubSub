@@ -1,6 +1,5 @@
 import { ICreatePersonUseCase } from '../../../application/person/interfaces/create-person.interfaces';
 import { Body, Controller, Inject, Param, Post } from '@nestjs/common';
-import { Result } from '../../../utils/error/custom-error';
 import { CreatePersonDto } from './dtos/create-person.dto';
 import { SendEmailCodeDto } from './dtos/send-email-code.dto';
 import { ISendEmailCodeUseCase } from '../../../application/person/interfaces/send-code-email.interfaces';
