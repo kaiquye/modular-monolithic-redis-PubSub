@@ -1,14 +1,14 @@
 import { IPersonRepository } from '../repositories/person-repository.interface';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Res } from '@nestjs/common';
 import {
   ICreatePersonIN,
   ICreatePersonOUT,
   ICreatePersonUseCase,
 } from '../interfaces/create-person.interfaces';
 import { Result } from '../../../utils/error/custom-error';
-import { FactoryMapper } from '../../../domain/mappers/factory';
 import { Person } from '../../../domain/Person/person.model';
-import { Cache } from '../../../infra/redis/connection';
+import { Cache } from '../../../providers/redis/connection';
+import { ErrPersonReference } from './flags';
 
 @Injectable()
 export class CreatePersonUseCase implements ICreatePersonUseCase {
@@ -18,24 +18,32 @@ export class CreatePersonUseCase implements ICreatePersonUseCase {
   ) {}
 
   async Execute(input: ICreatePersonIN): Promise<Result<ICreatePersonOUT>> {
-    const person = FactoryMapper<Person>('PERSON').toDomain(input);
+    const person = Person.toDomain(input);
 
     const alreadyRegistered = await this.personRep.exists({
       document: person.document,
+      email: person.email,
     });
 
+    console.log(alreadyRegistered);
     if (alreadyRegistered) {
       Result.Conflict({
         message: 'person already registered',
-        code: '',
+        errorReference: ErrPersonReference.CD_ALR_409,
       });
     }
 
     const cache = new Cache();
-    const keyEmail = person.email;
-    const emailCode = await cache.get(keyEmail);
-    if (!emailCode?.['confirmed']) {
-      console.log('email n aprovado.');
+    await cache.connection();
+
+    const value = await cache.get(input.email);
+    const valueParse = JSON.parse(value);
+
+    if (!valueParse?.['confirmed']) {
+      Result.BadRequest({
+        message: 'unconfirmed email code',
+        errorReference: ErrPersonReference.CD_CIV_400,
+      });
     }
 
     const newPerson = await this.personRep.create(person);

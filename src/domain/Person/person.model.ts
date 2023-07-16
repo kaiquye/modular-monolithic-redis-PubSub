@@ -31,8 +31,16 @@ export class Person {
     this.password = password;
   }
 
-  public Create(fistName: string, lastName: '', email: string, document: string, password: string) {
+  public static Create(fistName: string, lastName = '', email: string, document: string, password: string) {
     const currentStatus = EPersonStatus.ACTIVE;
     return new Person(fistName, lastName, email, document, password, currentStatus);
+  }
+
+  static toDomain(data: Partial<Person>): Person {
+    return Person.Create(data.firstName, data.lastName, data.email, data.document, data.password);
+  }
+
+  static toView(data: Person): Partial<Person> {
+    return undefined;
   }
 }

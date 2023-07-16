@@ -28,13 +28,15 @@ enum PersonStatus {
 }
 
 model Person {
-  Id        String       @id @default(uuid())
-  firstName String       @db.VarChar(255)
-  lastName  String?      @db.VarChar(255)
-  email     String       @unique @db.VarChar(255)
-  document  String       @db.VarChar(255)
-  password  String       @db.VarChar(255)
-  status    PersonStatus @default(ACTIVE)
+  Id          String        @id @default(uuid())
+  firstName   String        @db.VarChar(255)
+  lastName    String?       @db.VarChar(255)
+  email       String        @unique @db.VarChar(255)
+  document    String        @db.VarChar(255)
+  password    String        @db.VarChar(255)
+  status      PersonStatus  @default(ACTIVE)
+  Ticket      Ticket[]
+  Transaction Transaction[]
 }
 
 model Ticket {
@@ -46,11 +48,15 @@ model Ticket {
   status      TicketStatus @default(AVAILABLE)
   created_at  DateTime     @default(now()) @db.Timestamptz()
   updated_at  DateTime     @default(now()) @updatedAt @db.Timestamptz()
+  personId    String?
   Transaction Transaction?
+  Person      Person?      @relation(fields: [personId], references: [Id])
 }
 
 model Transaction {
   Id            String            @id @default(uuid())
+  personId      String?           @db.VarChar(255)
+  amount        String            @db.VarChar(255)
   e2e           String?           @unique @db.VarChar(255)
   status        Json
   ticketId      String            @unique()
@@ -58,4 +64,5 @@ model Transaction {
   created_at    DateTime          @default(now()) @db.Timestamptz()
   updated_at    DateTime          @default(now()) @updatedAt @db.Timestamptz()
   ticket_id     Ticket            @relation(fields: [ticketId], references: [Id])
+  Person        Person?           @relation(fields: [personId], references: [Id])
 }

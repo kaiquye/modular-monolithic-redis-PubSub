@@ -1,30 +1,41 @@
 export interface IError {
   message: string;
-  code: string;
+  errorReference: string;
 }
 
 export class Result<T> {
   public httpStatusCode: 500;
   public error: boolean;
-  public code: string;
+  public errorReference: string;
   public message: string;
   public data?: T;
 
-  private constructor(httpStatusCode, message, error, code?, data?) {
+  private constructor(httpStatusCode, message, error, errorReference?, data?) {
     this.httpStatusCode = httpStatusCode;
     this.message = message;
     this.error = error;
     this.data = data;
-    this.code = code;
+    this.errorReference = errorReference;
 
     Object.freeze(this);
   }
 
-  public static Conflict(data: IError) {
-    throw new Result(409, data.message, true, data.code);
+  public static InternalError(data: IError) {
+    throw new Result(500, data.message, true, data.errorReference);
   }
-
+  public static BadRequest(data: IError) {
+    throw new Result(400, data.message, true, data.errorReference);
+  }
+  public static Conflict(data: IError) {
+    throw new Result(409, data.message, true, data.errorReference);
+  }
+  public static NotFound(data: IError) {
+    throw new Result(404, data.message, true, data.errorReference);
+  }
   public static Created<OutPut>(data: OutPut): Result<OutPut> {
+    return new Result<OutPut>(201, null, false, null, data);
+  }
+  public static Ok<OutPut>(data?: OutPut): Result<OutPut> {
     return new Result<OutPut>(201, null, false, null, data);
   }
 }

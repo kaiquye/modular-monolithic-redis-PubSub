@@ -14,6 +14,4 @@ export class CreatePersonDto {
   lastName: string;
   @IsString()
   password: string;
-  @IsIn([EPersonStatus])
-  status: EPersonStatus;
 }
