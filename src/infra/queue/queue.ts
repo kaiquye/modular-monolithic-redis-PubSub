@@ -1,4 +1,4 @@
-import { Cache } from '../../providers/redis/connection';
+import { Cache } from '../../utils/providers/redis/connection';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

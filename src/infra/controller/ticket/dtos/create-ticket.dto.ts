@@ -9,6 +9,4 @@ export class CreateTicketBodyDto {
   description: string;
   @IsNumber()
   price: number;
-  @IsUUID()
-  person_id: string;
 }

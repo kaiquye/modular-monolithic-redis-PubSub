@@ -5,7 +5,7 @@ import { ITicketRepositoryInterface } from '../../ticket/repositories/ticket-rep
 import { ConfirmPaymentEvent } from '../../../domain/payments/events/confirm-payment.event';
 import { ETransactionStatus } from '../../../domain/payments/payments.model';
 import { TicketStatus } from '../../../domain/Ticket/ticket.model';
-import { NotifyReserveTicketProvider } from '../../../providers/email/notify-reserve-ticket.provider';
+import { NotifyReserveTicketProvider } from '../../../utils/providers/email/notify-reserve-ticket.provider';
 
 @Injectable()
 export class ConfirmPaymentWebHook implements IConfirmPaymentWebHook {
