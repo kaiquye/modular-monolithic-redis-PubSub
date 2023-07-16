@@ -7,7 +7,6 @@ export interface ICreateTicketIN {
   location: string;
   description: string;
   price: number;
-  person_id: string;
 }
 
 export interface ICreateTicketOUT {

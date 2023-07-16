@@ -5,7 +5,7 @@ import {
 } from '../interfaces/finalize-payment.interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import { Result } from '../../../utils/error/custom-error';
-import { ErrPaymentsReference } from './flogs';
+import { ErrPaymentsReference } from './flags';
 import { ReserveTicketEvent } from '../../../domain/Ticket/events/reserve-ticket.event';
 import { IPersonRepository } from '../../person/repositories/person-repository.interface';
 import { ErrPersonReference } from '../../person/useCases/flags';

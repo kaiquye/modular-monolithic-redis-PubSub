@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ReserveTicketEvent } from '../../../domain/Ticket/events/reserve-ticket.event';
 import { ITicketRepositoryInterface } from '../repositories/ticket-repository.interface';
 import { TicketStatus } from '../../../domain/Ticket/ticket.model';
-import { NotifyReserveTicketProvider } from '../../../providers/email/notify-reserve-ticket.provider';
+import { NotifyReserveTicketProvider } from '../../../utils/providers/email/notify-reserve-ticket.provider';
 
 @Injectable()
 export class ReserveTicketUseCase implements IReserveTicketUseCase {

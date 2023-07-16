@@ -7,7 +7,7 @@ import {
 } from '../interfaces/create-person.interfaces';
 import { Result } from '../../../utils/error/custom-error';
 import { Person } from '../../../domain/Person/person.model';
-import { Cache } from '../../../providers/redis/connection';
+import { Cache } from '../../../utils/providers/redis/connection';
 import { ErrPersonReference } from './flags';
 
 @Injectable()

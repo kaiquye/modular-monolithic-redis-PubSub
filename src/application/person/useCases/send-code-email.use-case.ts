@@ -4,9 +4,9 @@ import {
   ISendCodeEmailOut,
   ISendEmailCodeUseCase,
 } from '../interfaces/send-code-email.interfaces';
-import { Cache } from '../../../providers/redis/connection';
+import { Cache } from '../../../utils/providers/redis/connection';
 import { Injectable } from '@nestjs/common';
-import { SendEmailCodeProvider } from '../../../providers/email/send-email-code.provider';
+import { SendEmailCodeProvider } from '../../../utils/providers/email/send-email-code.provider';
 
 @Injectable()
 export class SendCodeEmailUseCase implements ISendEmailCodeUseCase {
