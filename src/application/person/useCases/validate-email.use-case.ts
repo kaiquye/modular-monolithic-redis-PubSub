@@ -1,6 +1,6 @@
 import { IValidateEmailCodeIn, IValidateEmailCodeUseCase } from '../interfaces/validate-email.interfaces';
 import { Result } from '../../../utils/error/custom-error';
-import { Cache } from '../../../infra/redis/connection';
+import { Cache } from '../../../providers/redis/connection';
 import { Injectable } from '@nestjs/common';
 import { ErrPersonReference } from './flags';
 

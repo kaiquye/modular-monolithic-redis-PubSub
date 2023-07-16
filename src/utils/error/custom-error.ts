@@ -20,6 +20,9 @@ export class Result<T> {
     Object.freeze(this);
   }
 
+  public static InternalError(data: IError) {
+    throw new Result(500, data.message, true, data.errorReference);
+  }
   public static BadRequest(data: IError) {
     throw new Result(400, data.message, true, data.errorReference);
   }
