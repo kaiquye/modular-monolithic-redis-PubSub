@@ -6,9 +6,8 @@ import {
   ICreatePersonUseCase,
 } from '../interfaces/create-person.interfaces';
 import { Result } from '../../../utils/error/custom-error';
-import { FactoryMapper } from '../../../domain/mappers/factory';
 import { Person } from '../../../domain/Person/person.model';
-import { Cache } from '../../../infra/redis/connection';
+import { Cache } from '../../../providers/redis/connection';
 import { ErrPersonReference } from './flags';
 
 @Injectable()
@@ -19,13 +18,14 @@ export class CreatePersonUseCase implements ICreatePersonUseCase {
   ) {}
 
   async Execute(input: ICreatePersonIN): Promise<Result<ICreatePersonOUT>> {
-    const person = FactoryMapper<Person>('PERSON').toDomain(input);
+    const person = Person.toDomain(input);
 
     const alreadyRegistered = await this.personRep.exists({
       document: person.document,
       email: person.email,
     });
 
+    console.log(alreadyRegistered);
     if (alreadyRegistered) {
       Result.Conflict({
         message: 'person already registered',

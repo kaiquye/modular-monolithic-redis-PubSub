@@ -1,5 +1,4 @@
 import { ICreateTicketIN, ICreateTicketOUT, ICreateTicketUseCase } from '../interfaces/create-ticket.use-case';
-import { FactoryMapper } from '../../../domain/mappers/factory';
 import { Result } from '../../../utils/error/custom-error';
 import { ErrTicketReference } from './flags';
 import { ITicketRepositoryInterface } from '../repositories/ticket-repository.interface';
@@ -13,11 +12,12 @@ export class CreateTicketUseCase implements ICreateTicketUseCase {
     private readonly ticketRep: ITicketRepositoryInterface,
   ) {}
   async Execute(input: ICreateTicketIN): Promise<Result<ICreateTicketOUT>> {
-    const ticket = FactoryMapper<Ticket>('TICKET').toDomain(input);
+    const ticket = Ticket.toDomain(input);
 
     const ticketAlreadyExists = await this.ticketRep.exists({
-      Id: ticket.Id,
+      number: ticket.number,
     });
+
     if (ticketAlreadyExists) {
       Result.Conflict({
         message: 'ticket already exists',
@@ -27,6 +27,6 @@ export class CreateTicketUseCase implements ICreateTicketUseCase {
 
     const newTicket = await this.ticketRep.save(ticket);
 
-    return Result.Created<ICreateTicketOUT>({ Id: newTicket.Id });
+    return Result.Created<ICreateTicketOUT>({ Id: newTicket.Id, code: newTicket.number });
   }
 }
